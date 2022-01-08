@@ -19,4 +19,9 @@ Route::post('login', [\App\Http\Controllers\Api\AuthController::class, 'login'])
 Route::middleware('auth:api')->group(function () {
     Route::get('/me', [\App\Http\Controllers\API\AuthController::class, 'me'])->name('me');
     Route::get('/logout', [\App\Http\Controllers\API\AuthController::class, 'logout'])->name('logout');
+
+    Route::resource('entries', \App\Http\Controllers\API\EntryController::class)->except('update');
+    Route::post('/entries/{id}', [\App\Http\Controllers\API\EntryController::class, 'update'])->name('entry_update');
+    Route::get('/options', [\App\Http\Controllers\API\EntryController::class, 'options'])->name('options');
+
 });

@@ -11,7 +11,6 @@ use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use mysql_xdevapi\Exception;
 use Psy\Exception\ErrorException;
 
 class AuthController extends Controller
