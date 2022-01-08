@@ -14,8 +14,7 @@
         name="navbar"
         :navbarBackgroundColor="navbarBackgroundColor"
         :navbarTypeClass="[...navbarTypeClass, 'header-navbar navbar navbar-shadow align-items-center']"
-      >
-      </slot>
+      />
     </b-navbar>
     <!--/ Navbar -->
 

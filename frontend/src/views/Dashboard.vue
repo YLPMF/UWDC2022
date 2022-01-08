@@ -34,6 +34,7 @@
           <b-button
             variant="outline-secondary"
             class="navbar-button"
+            @click="logout"
           >
             SIGN OUT
           </b-button>
@@ -48,7 +49,10 @@
       <b-row>
         <b-col lg="3">
           <b-card title="Logged working hours">
-            <b-row no-gutters align="center">
+            <b-row
+              no-gutters
+              align="center"
+            >
               <b-col md="6">
                 <div class="hours">
                   15,5 h
@@ -63,18 +67,17 @@
               </b-col>
             </b-row>
           </b-card>
-          <b-card title="12 months overview">
-
-          </b-card>
-          <b-card title="Categories">
-
-          </b-card>
-          <b-card title="Used technologies">
-
-          </b-card>
+          <b-card title="12 months overview" />
+          <b-card title="Categories" />
+          <b-card title="Used technologies" />
         </b-col>
         <b-col lg="9">
-          <b-table striped hover :items="items" :fields="fields"></b-table>
+          <b-table
+            striped
+            hover
+            :items="items"
+            :fields="fields"
+          />
         </b-col>
       </b-row>
     </b-container>
@@ -85,6 +88,7 @@
 import {
   BCard, BCardText, BLink, BContainer, BRow, BCol, BNavbar, BButton, BNavItem, BNavbarNav, BTable,
 } from 'bootstrap-vue'
+import {mapActions, mapGetters, mapMutations} from 'vuex';
 
 export default {
   components: {
@@ -144,6 +148,11 @@ export default {
       ],
     }
   },
+  methods: {
+    ...mapActions ({
+      logout: "auth/logout",
+    }),
+  }
 }
 </script>
 

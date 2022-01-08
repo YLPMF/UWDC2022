@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import './plugins/axios'
 import { ToastPlugin, ModalPlugin } from 'bootstrap-vue'
 import VueCompositionAPI from '@vue/composition-api'
 
@@ -28,8 +29,12 @@ require('@/assets/scss/style.scss')
 
 Vue.config.productionTip = false
 
-new Vue({
-  router,
-  store,
-  render: h => h(App),
-}).$mount('#app')
+store.dispatch('auth/checkToken').then(() => {
+
+  new Vue({
+    router,
+    store,
+    render: h => h(App),
+  }).$mount('#app')
+
+});

@@ -12,9 +12,10 @@ const router = new VueRouter({
   routes: [
     {
       path: '/dashboard',
-      name: 'home',
+      name: 'dashboard',
       component: () => import('@/views/Dashboard.vue'),
       meta: {
+        layout: 'full',
         pageTitle: 'Dashboard',
         breadcrumb: [
           {
@@ -25,7 +26,7 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/login',
+      path: '/',
       name: 'login',
       component: () => import('@/views/Login.vue'),
       meta: {

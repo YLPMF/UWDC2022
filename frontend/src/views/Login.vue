@@ -55,7 +55,7 @@
                 >
                   <b-form-input
                     id="login-email"
-                    v-model="userEmail"
+                    v-model="form.email"
                     :state="errors.length > 0 ? false:null"
                     name="login-email"
                     placeholder="john@example.com"
@@ -80,7 +80,7 @@
                   >
                     <b-form-input
                       id="login-password"
-                      v-model="password"
+                      v-model="form.password"
                       :state="errors.length > 0 ? false:null"
                       class="form-control-merge"
                       :type="passwordFieldType"
@@ -129,6 +129,7 @@ import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import store from '@/store/index'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import {mapActions, mapGetters, mapMutations} from 'vuex';
 
 export default {
   components: {
@@ -152,9 +153,10 @@ export default {
   mixins: [togglePasswordVisibility],
   data() {
     return {
-      status: '',
-      password: '',
-      userEmail: '',
+      form: {
+        'email': '',
+        'password': '',
+      },
       sideImg: require('@/assets/images/pages/login-v2.svg'),
       // validation rulesimport store from '@/store/index'
       required,
@@ -175,17 +177,21 @@ export default {
     },
   },
   methods: {
+    ...mapActions ({
+      login: "auth/login",
+    }),
     validationForm() {
       this.$refs.loginValidation.validate().then(success => {
         if (success) {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: 'Form Submitted',
-              icon: 'EditIcon',
-              variant: 'success',
-            },
-          })
+          this.login(this.form);
+          // this.$toast({
+          //   component: ToastificationContent,
+          //   props: {
+          //     title: 'Form Submitted',
+          //     icon: 'EditIcon',
+          //     variant: 'success',
+          //   },
+          // })
         }
       })
     },

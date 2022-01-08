@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', [\App\Http\Controllers\Api\AuthController::class, 'login'])->name('login');
 
+Route::middleware('auth:api')->group(function () {
+    Route::get('/me', [\App\Http\Controllers\API\AuthController::class, 'me'])->name('me');
+    Route::get('/logout', [\App\Http\Controllers\API\AuthController::class, 'logout'])->name('logout');
+});
