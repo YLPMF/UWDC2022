@@ -23,5 +23,6 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('entries', \App\Http\Controllers\API\EntryController::class)->except('update');
     Route::post('/entries/{id}', [\App\Http\Controllers\API\EntryController::class, 'update'])->name('entry_update');
     Route::get('/options', [\App\Http\Controllers\API\EntryController::class, 'options'])->name('options');
+    Route::get('/statistics', [\App\Http\Controllers\API\EntryController::class, 'statistics'])->name('statistics');
 
 });

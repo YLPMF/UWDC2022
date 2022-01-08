@@ -20,7 +20,7 @@ class EntryController extends Controller
      */
     public function index(Request $request)
     {
-        return response()->json(EntryResource::collection(Entry::where('user_id', $request->user()->id)->get()));
+        return response()->json(EntryResource::collection(Entry::where('user_id', $request->user()->id)->orderBy('date')->get()));
     }
 
     public function options() {
@@ -32,6 +32,16 @@ class EntryController extends Controller
         ];
 
         return response()->json($options);
+    }
+
+    public function statistics(Request $request) {
+
+        $last_month = Entry::selectRaw('SUM(time) as sum')->where('user_id', $request->user()->id)
+            ->whereMonth('date', Carbon::now()->month)->get();
+
+        $total = Entry::selectRaw('SUM(time) as sum')->where('user_id', $request->user()->id)->get();
+
+        return response()->json(['last_month' => $last_month, 'total' => $total]);
     }
 
     /**
@@ -53,6 +63,7 @@ class EntryController extends Controller
         $entry = Entry::create([
             'date' => Carbon::create($request->date),
             'time' => $request->time,
+            'notes' => $request->notes,
         ]);
 
         $entry->user_id = $request->user()->id;
@@ -69,7 +80,7 @@ class EntryController extends Controller
 
         $tags = [];
 
-        foreach(json_decode($request->tags) as $tag) {
+        foreach($request->tags as $tag) {
             $tagModel = Tag::firstOrCreate([
                'title' => $tag
             ]);
@@ -92,7 +103,7 @@ class EntryController extends Controller
      */
     public function show(Request $request, $id)
     {
-        return response()->json(Entry::where([['id', $id], ['user_id', $request->user()->id]])->firstOrFail());
+        return response()->json(new EntryResource(Entry::where([['id', $id], ['user_id', $request->user()->id]])->firstOrFail()));
     }
 
     /**
@@ -118,6 +129,8 @@ class EntryController extends Controller
 
         $entry->time = $request->time;
 
+        $entry->notes = $request->notes;
+
         $type = Type::firstOrCreate([
             'title' => $request->type
         ]);
@@ -130,7 +143,7 @@ class EntryController extends Controller
 
         $tags = [];
 
-        foreach(json_decode($request->tags) as $tag) {
+        foreach($request->tags as $tag) {
             $tagModel = Tag::firstOrCreate([
                 'title' => $tag
             ]);
