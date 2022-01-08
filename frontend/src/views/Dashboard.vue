@@ -56,13 +56,13 @@
               align="center"
             >
               <b-col md="6">
-                <div class="hours" v-if="statistics">
+                <div class="hours" v-if="statistics.total">
                   {{ statistics.total[0].sum }} h
                   <span>Total</span>
                 </div>
               </b-col>
               <b-col md="6">
-                <div class="hours" v-if="statistics">
+                <div class="hours" v-if="statistics.last_month">
                   {{ statistics.last_month[0].sum }} h
                   <span>Last month</span>
                 </div>
