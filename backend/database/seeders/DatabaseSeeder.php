@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
+use App\Models\Tag;
+use App\Models\Type;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -24,6 +27,18 @@ class DatabaseSeeder extends Seeder
             'name' => 'Roberts F.',
             'email' => 'competitor2@skill17.com',
             'password' => Hash::make('demopass2'),
+        ]);
+
+        Category::create([
+            'title' => 'Test'
+        ]);
+
+        Type::create([
+            'title' => 'Test'
+        ]);
+
+        Tag::create([
+           'title' => 'VUE.JS'
         ]);
     }
 }
